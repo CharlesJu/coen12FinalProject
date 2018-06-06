@@ -76,10 +76,16 @@ static int search(SET *sp, int id, bool *found){
 
     for(int i = 0; i < sp->length; i++){
         //Quadratic hashing
-        n = (id * 1151 + i) % sp->length;
+        n = (id * 1151 + i * i) % sp->length;
 
         //Checks all three cases for the flag
-        if(sp->flags[n] == EMPTY) {
+        if(sp->flags[n] == FILLED){
+            //Check if the values are the same if a filled element is encountered
+            if(compare(sp->data[n]->id, id) == 0){
+                *found = true;
+                return n;
+            }
+        } else if(sp->flags[n] == EMPTY) {
             //Search ends when an empty element is encountered 
             if(mem > -1){
                 //Return last deleted index if one is found
@@ -92,12 +98,6 @@ static int search(SET *sp, int id, bool *found){
             //Remember the first deleted slot
             if(mem < 0){
                 mem = n;
-            }
-        } else if(sp->flags[n] == FILLED){
-            //Check if the values are the same if a filled element is encountered
-            if(compare(sp->data[n]->id, id) == 0){
-                *found = true;
-                return n;
             }
         }
     } 
