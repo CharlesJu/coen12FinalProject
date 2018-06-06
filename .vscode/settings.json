@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "dataset.h": "c"
+        "dataset.h": "c",
+        "stdlib.h": "c",
+        "stdbool.h": "c"
     }
 }

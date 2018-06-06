@@ -6,20 +6,21 @@
 
 # define MAX_STUDENTS 3000
 
-int random(int min, int max){
+int ran(int min, int max){
     return ((rand() % (max - min + 1)) + min);
 }
 
 int main(void){
+    srand (time(NULL));
     SET *sp = createSet(MAX_STUDENTS);
-    int id = random(1, 2);
+    int id = ran(1, 2);
     for(int i = 0; i < 1000; i++){
-        int age = random(18, 30);
-        insert(sp, age, id);
-        id += random(1,2);
+        int age = ran(18, 30);
+        insert(sp, id, age);
+        id += ran(1,2);
     }
-    searchID(sp, random(1,2000));
-    remove(sp, random(1,2000));
+    searchID(sp, ran(1,2000));
+    removeStu(sp, ran(1,2000));
     destroySet(sp);
     return 0;
 }
