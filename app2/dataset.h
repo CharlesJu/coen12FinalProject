@@ -11,6 +11,6 @@ void searchID(SET *sp, int id);
 
 void insert(SET *sp, int id, int age);
 
-void remove(SET *SP, int id);
+void removeStu(SET *SP, int id);
 
 # endif /* DATASET_H */
