@@ -7,11 +7,11 @@ SET *createSet(int m);
 
 void destroySet(SET *sp);
 
-int searchAge(SET *sp, int a);          //Print
+void searchAge(SET *sp, int a);          //Print
 
-void insert(SET *sp, int age, int id);
+void insert(SET *sp, int id, int age);
 
-void remove(SET *sp, int id);           //Print
+void removeStu(SET *sp, int id);           //Print
 
 void maxAgeGap(SET *sp);
 
