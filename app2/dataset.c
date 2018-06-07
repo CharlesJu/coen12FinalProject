@@ -130,7 +130,7 @@ void insert(SET *sp, int id, int age){
         sp->data[n]->age = age;
         sp->flags[n] = FILLED;
         sp->count++;
-        printf("Inserting Student at [%d] | id: %d, age: %d\n", n, id, age);
+        printf("Adding Student at [%d]   \tid: %d,\tage: %d\n", n, id, age);
 
     } else {
         printf("Student %d already exists\n", id);
