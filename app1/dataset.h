@@ -3,16 +3,18 @@
 
 typedef struct dataset SET;
 
-SET *createSet(int m);
+extern SET *createSet(int m); //done
 
-void destroySet(SET *sp);
+extern void destroySet(SET *sp); //done
 
-void searchAge(SET *sp, int a);          //Print
+extern void searchAge(SET *sp, int a);   //done       //Print
 
-void insert(SET *sp, int id, int age);
+extern void insert(SET *sp, int id, int age); //done
 
-void removeStu(SET *sp, int id);           //Print
+extern void removeStu(SET *sp, int age);           //Print
 
-void maxAgeGap(SET *sp);
+extern void maxAgeGap(SET *sp);  //done
+
+extern void printAll(SET *sp);
 
 # endif /* DATASET_H */
