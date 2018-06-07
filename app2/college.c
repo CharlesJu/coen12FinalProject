@@ -20,7 +20,9 @@ int main(void){
         id += ran(1,2);
     }
     searchID(sp, ran(1,2000));
-    removeStu(sp, ran(1,2000));
+    int n = ran(1, 2000);
+    removeStu(sp, n);
+    searchID(sp, n);
     destroySet(sp);
     return 0;
 }
