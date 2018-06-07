@@ -188,6 +188,7 @@ void searchAge(SET *sp, int a){
 
 /**
  * @brief:  Remove the student with the matching id
+ *          Complexity: O(n)
  */ 
 void removeStu(SET *sp, int id){
     assert(sp != NULL);
@@ -220,6 +221,7 @@ void removeStu(SET *sp, int id){
 /**
  * @brief:  prints the index, id, and age of every student in the student data array
  *          in the SET pointed to by sp
+ *          Complexity: O(n)
  */ 
 void printAll(SET *sp){
     assert(sp != NULL);
