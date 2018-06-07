@@ -2,7 +2,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
-# include "list.h"
+# include "dataset.h"
 
 # define N_AGES 13
 
@@ -12,36 +12,39 @@ typedef struct student {
 } STU;
 
 typedef struct dataset{
-    LIST **data;
-    int min;
-    int max;
+    STU **data;
     int count;
-} SET;
+    int length;
 
-static unsigned agehash(int age){
-    return age - 18;
-}
+} SET;
 
 static STU *makeStudent(int id, int age){
     STU *stu = malloc(sizeof(STU));
     assert(stu != NULL);
     stu->age = age;
     stu->id = id;
+
+    return stu;
 }
 
-static int compare(STU *a, STU *b){
+static int compareId(STU *a, STU *b){
+    assert(a != NULL && b != NULL);
     return a->id - b->id;
 }
 
-SET *createSet(){
+static int compareAge(STU *a, STU *b){
+    assert(a != NULL && b != NULL);
+    return a->age - b->age;
+}
+
+SET *createSet(int m){
     SET *sp = malloc(sizeof(SET));
     assert(sp != NULL);
 
-    sp->min = -1;
-    sp->max = -1;
     sp->count = 0;
-
-    sp->data = malloc(sizeof(LIST*)*N_AGES);
+    sp->length = m;
+    
+    sp->data = malloc(sizeof(STU*)*m);
     assert(sp->data != NULL);
 
     return sp;
@@ -50,66 +53,92 @@ SET *createSet(){
 void destroySet(SET *sp){
     assert(sp != NULL);
 
-    for(int i = 0; i < N_AGES; i++){
-        if(sp->data[i] != NULL){
-            destroyList(sp->data[i]);
-        }
+    for(int i = 0; i < sp->count; i++){
+        free(sp->data[i]);
     }
     free(sp->data);
     free(sp);
 }
 
-void searchAge(SET *sp, int age){
+static int bSearch(SET *sp, int age, bool *found){
     assert(sp != NULL);
+    *found = false;
+    int hi = sp->count - 1;
+    int lo = 0;
+    int mid = 0;
 
-    STU **students = getItems(sp->data[agehash(age)]);
-    int n = sizeof(students) / sizeof(STU);
-    for(int i = 0; i < n; i++){
-        printf("Student ID: %d\n", students[i]->id);
+    while(lo <= hi){
+        mid = (lo + hi)/2;
+        if(sp->data[mid]->age > age){
+            hi = mid - 1;
+        } else if(sp->data[mid]->age < age){
+            lo = mid + 1;
+        } else {
+            *found = true;
+            return mid;
+        }
     }
-};          //Print
+
+    return lo;
+}
 
 void insert(SET *sp, int id, int age){
     assert(sp != NULL);
-
     STU *stu = makeStudent(id, age);
-    if(sp->min == -1 && sp->max == -1){
-        sp->min = age;
-        sp->max = age;
-    } else if(age < sp->min){
-        sp->min = age;
-    } else if(age > sp->max){
-        sp->max = age;
+    bool found = false;
+    int i = bSearch(sp, age, &found);
+    printf("Inserting Student: %d | age: %d\n", id, age);
+    for(int j = sp->count; j > i; j--){
+        sp->data[j] = sp->data[j-1];
     }
+    sp->data[i] = makeStudent(id, age);
     sp->count ++;
-    if(sp->data[agehash(age)] == NULL){
-        sp->data[agehash(age)] = createList(compare);
-    }
+}
 
-    addFirst(sp->data[agehash(age)], stu); 
+void maxAgeGap(SET *sp){
+    int min = sp->data[0]->age;
+    int max = sp->data[sp->count-1]->age;
+    int gap = max - min;
+
+    printf("Max Age: %d | Min Age: %d | Age Gap: %d\n", max, min, gap);
+}
+
+void searchAge(SET *sp, int a){
+    assert(sp != NULL);
+    printf("Searing for students age %d\n", a);
+    for(int i = 0; (i < sp->count) && (sp->data[i]->age <= a); i++){
+        if(sp->data[i]->age == a){
+            printf("Found Student %d\n", sp->data[i]->id);
+        }
+    }
 }
 
 void removeStu(SET *sp, int id){
     assert(sp != NULL);
-    STU *stu;
+    bool found = false;
     int i;
-    for(i = agehash(sp->min); i < agehash(sp->max) + 1; i++){
-        stu = findItem(sp->data[i], makeStudent(id, 0));
-        if(stu != NULL){
-            break;
+    printf("Attempting to remove student %d\n", id);
+    for(i = 0; i < sp->count && !found; i++){
+        if(sp->data[i]->id == id){
+            found = true;
         }
     }
-    if(stu != NULL){
-        printf("Removing Student %d | age: %d\n", id, stu->age);
+    if(found){
+        printf("Removing student id: %d | age %d\n", id, sp->data[i]->age);
+        free(sp->data[i]);
+        for(int j = i + 1; j < sp->count; j++){
+            sp->data[j-1] = sp->data[j];
+        }
         sp->count--;
-        if(numItems(sp->data[i]) == 1){
-            if(stu->age < sp->min){
-                
-            }  
-        }
     } else {
-        printf("Cannot Find Student &d\n", id);
+        printf("Couldn't find student %d\n", id);
     }
-}           //Print
+    
+}
 
-void maxAgeGap(SET *sp);
+void printAll(SET *sp){
+    assert(sp != NULL);
+    for(int i = 0; i < sp->count; i++){
+        printf("#%d: %d \n", sp->data[i]->id, sp->data[i]->age);
+    }
+}

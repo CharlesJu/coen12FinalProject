@@ -11,14 +11,16 @@ int ran(int min, int max){
 }
 
 int main(void){
+    srand(time(NULL));
     SET *sp = createSet(MAX_STUDENTS);
     int id = ran(1, 2);
-    for(int i = 0; i < 1000; i++){
+    for(int i = 0; i < 20; i++){
         int age = ran(18, 30);
-        insert(sp, age, id);
+        insert(sp, id, age);
         id += ran(1,2);
     }
-    searchAge(sp, ran(18,30));
+    // printAll(sp);
+    searchAge(sp, 30);
     removeStu(sp, ran(18, 30));
     maxAgeGap(sp);
     destroySet(sp);
