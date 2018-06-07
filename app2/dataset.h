@@ -13,6 +13,5 @@ void insert(SET *sp, int id, int age);
 
 void removeStu(SET *SP, int id);
 
-void printAll(SET *sp);
 
 # endif /* DATASET_H */
