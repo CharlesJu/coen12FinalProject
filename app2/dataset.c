@@ -24,6 +24,14 @@ typedef struct dataset {
 } SET;
 
 /**
+ * @brief:  Compares two integers
+ * @return: the difference between a and b
+ */ 
+static int compare(int a, int b){
+    return a - b;
+}
+
+/**
  * @brief:  Uses a hash function with quadratic proving to find the student
  *          with the specified id
  *          Complexity: O(1) - Most times, O(n) - Worst case
@@ -65,13 +73,6 @@ static int search(SET *sp, int id, bool *found){
         }
     } 
     return mem;
-}
-/**
- * @brief:  Compares two integers
- * @return: the difference between a and b
- */ 
-static int compare(int a, int b){
-    return a - b;
 }
 
 /**
