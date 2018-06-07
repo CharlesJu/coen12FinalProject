@@ -149,7 +149,7 @@ void insert(SET *sp, int id, int age){
     bool x;
     //Determine index of where the new student should be placed
     int i = bSearch(sp, age, &x);
-    // printf("Inserting Student: %d | age: %d\n", id, age);
+    printf("[%d] | #%d, age: %d\n", i, id, age);
 
     //Shift all values above to make room in the array
     for(int j = sp->count; j > i; j--){
@@ -232,17 +232,5 @@ void removeStu(SET *sp, int age){
             min++;
         }
         sp->count -= gap;
-    }
-}
-
-/**
- * @brief:  prints the index, id, and age of every student in the student data array
- *          in the SET pointed to by sp
- *          Complexity: O(n)
- */ 
-void printAll(SET *sp){
-    assert(sp != NULL);
-    for(int i = 0; i < sp->count; i++){
-        printf("[%d]\t#%d: %d \n", i, sp->data[i]->id, sp->data[i]->age);
     }
 }

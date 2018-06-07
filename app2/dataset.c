@@ -130,7 +130,8 @@ void insert(SET *sp, int id, int age){
         sp->data[n]->age = age;
         sp->flags[n] = FILLED;
         sp->count++;
-        printf("Inserting Student: %d | age: %d\n", id, age);
+        printf("Inserting Student at [%d] | id: %d, age: %d\n", n, id, age);
+
     } else {
         printf("Student %d already exists\n", id);
     }
@@ -152,4 +153,6 @@ void removeStu(SET *sp, int id){
         printf("Cannot Find Student %d\n", id);
     }
 }
+
+
 
