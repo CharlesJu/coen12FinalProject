@@ -94,14 +94,14 @@ void destroySet(SET *sp){
  * @return: The index in the datay array of SET sp of where the student 
  *          should be place 
  */ 
-static int bSearch(SET *sp, int age){
+static int bSearch(SET *sp, int age, bool *found){
     assert(sp != NULL);
 
     //Set initial values for search
     int hi = sp->count - 1;
     int lo = 0;
     int mid = 0;
-
+    *found = false;
     //Divide set into half until the value is found
     while(lo <= hi){
         mid = (lo + hi)/2;
@@ -110,6 +110,7 @@ static int bSearch(SET *sp, int age){
         } else if(sp->data[mid]->age < age){
             lo = mid + 1;
         } else {
+            *found = true;
             return mid;
         }
     }
@@ -145,9 +146,9 @@ void insert(SET *sp, int id, int age){
         printf("Insertion failed because student %d is already in the list", id);
         return;
     }
-
+    bool x;
     //Determine index of where the new student should be placed
-    int i = bSearch(sp, age);
+    int i = bSearch(sp, age, &x);
     // printf("Inserting Student: %d | age: %d\n", id, age);
 
     //Shift all values above to make room in the array
@@ -187,35 +188,51 @@ void searchAge(SET *sp, int a){
 }
 
 /**
- * @brief:  Remove the student with the matching id
+ * @brief:  Remove the student with the same age
  *          Complexity: O(n)
  */ 
-void removeStu(SET *sp, int id){
+void removeStu(SET *sp, int age){
     assert(sp != NULL);
     bool found = false;
-    int i;
-    printf("Attempting to remove student %d\n", id);
-
-    //Go through the array until the student if found
-    for(i = 0; i < sp->count && !found; i++){
-        if(sp->data[i]->id == id){
-            found = true;
-        }
-    }
+    int i = bSearch(sp, age, &found);
+    printf("Removing students aged %d\n", age);
     if(found){
-        i--;
-        printf("Removing student id: %d | age %d\n", id, sp->data[i]->age);
+        int min = i;
+        int max = i;
+        bool go = true;
 
-        //Deallocate memory associated with the pointer and shift all values down
-        free(sp->data[i]);
-        for(int j = i + 1; j < sp->count; j++){
-            sp->data[j-1] = sp->data[j];
+        //Removing all students to the right of i with matching age
+        for(int j = i; j < sp->count && go ; j++){
+            if(sp->data[j]->age != age){
+                go = false;
+            } else {
+                printf("Removed student %d | age: %d\n", sp->data[j]->id, sp->data[j]->age);
+                free(sp->data[j]);
+                max++;
+            }
         }
-        sp->count--;
-    } else {
-        printf("Couldn't find student %d\n", id);
+
+        //Removing all students to the left of i with matching age
+        go = true;
+        for(int j = i-1; j > 0 && go ; j--){
+            if(sp->data[j]->age != age){
+                go = false;
+            } else {
+                free(sp->data[j]);
+                printf("Removed student %d | age: %d\n", sp->data[j]->id, sp->data[j]->age);
+                min--;
+            }
+        }
+        int gap = max - min;
+        int k;
+
+        //Shift
+        for(k = max; k < sp->count && max < sp->count; k++){
+            sp->data[min] = sp->data[k];
+            min++;
+        }
+        sp->count -= gap;
     }
-    
 }
 
 /**

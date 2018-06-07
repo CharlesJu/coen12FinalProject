@@ -11,7 +11,7 @@ extern void searchAge(SET *sp, int a);   //done       //Print
 
 extern void insert(SET *sp, int id, int age); //done
 
-extern void removeStu(SET *sp, int id);           //Print
+extern void removeStu(SET *sp, int age);           //Print
 
 extern void maxAgeGap(SET *sp);  //done
 
