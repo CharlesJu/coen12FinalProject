@@ -3,15 +3,14 @@
 
 typedef struct dataset SET;
 
-SET *createSet(int m);
+extern SET *createSet(int m);
 
-void destroySet(SET *sp);
+extern void destroySet(SET *sp);
 
-void searchID(SET *sp, int id);
+extern void searchID(SET *sp, int id);
 
-void insert(SET *sp, int id, int age);
+extern void insert(SET *sp, int id, int age);
 
-void removeStu(SET *SP, int id);
-
+extern void removeStu(SET *SP, int id);
 
 # endif /* DATASET_H */

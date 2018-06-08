@@ -1,0 +1,28 @@
+APPLICATION 2
+
+Data Structure: Hash Table
+    - Hash table is used because randomly generated id values need to
+      be accessed as quick as possible
+    - Sorted list would take too long to insert because it
+      requires shifting
+    - Linked list woule not work because searching would take O(n) time
+
+createSet: O(n)
+    - O(n) to malloc all elements of the array of student pointers
+    - O(1) for everything else
+
+destroySet:O(n) 
+    - O(n) to deallocate all elements in the array of student pointers
+    - O(1) for everything else
+
+searchID: O(1) - Most cases | O(n) - in rare, worst case
+    - O(1) in most cases for the hash function, O(n) if all the values
+      are beside each other
+
+insert: O(1) - Most cases | O(n) - in rare, worst case
+    - O(1) in most cases for the hash function, O(n) if all the values
+      are beside each other
+
+removeStu: O(1) - Most cases | O(n) - in rare, worst case
+    - O(1) in most cases for the hash function, O(n) if all the values
+      are beside each other

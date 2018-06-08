@@ -25,6 +25,7 @@ typedef struct dataset {
 
 /**
  * @brief:  Compares two integers
+ *          Complexity: O(1)
  * @return: the difference between a and b
  */ 
 static int compare(int a, int b){
@@ -46,11 +47,12 @@ static int search(SET *sp, int id, bool *found){
     *found = false;
 
     for(int i = 0; i < sp->length; i++){
-        //Quadratic hashing
-        n = (id * 1151 + i * i) % sp->length;
-
+        //Linear Probing
+        n = (id + i) % sp->length;
+        
         //Checks all three cases for the flag
         if(sp->flags[n] == FILLED){
+            // printf("collision\n");
             //Check if the values are the same if a filled element is encountered
             if(compare(sp->data[n]->id, id) == 0){
                 *found = true;
@@ -67,6 +69,7 @@ static int search(SET *sp, int id, bool *found){
             }
         } else if(sp->flags[n] == DELETED){ 
             //Remember the first deleted slot
+            // printf("collision\n");
             if(mem < 0){
                 mem = n;
             }
@@ -77,6 +80,7 @@ static int search(SET *sp, int id, bool *found){
 
 /**
  * @brief:  Creates a new set containing students
+ *          Complexity: O(n)
  * @return: the pointer to the new set
  */ 
 SET *createSet(int m){
@@ -159,7 +163,7 @@ void insert(SET *sp, int id, int age){
         sp->data[n]->age = age;
         sp->flags[n] = FILLED;
         sp->count++;
-        printf("Adding Student at [%d]   \tid: %d,\tage: %d\n", n, id, age);
+        printf("Adding Student at [%d]    \tid: %d   \tage: %d\n", n, id, age);
 
     } else {
         printf("Student %d already exists\n", id);

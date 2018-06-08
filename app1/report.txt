@@ -1,0 +1,47 @@
+APPLICATION 1
+
+Data Structure: Sorted Array of Students (in terms of student age)
+    - Sorted list can calculate the max age gap with O(1) time.
+    - All of the ages are grouped together, so finding all students
+      with a specified age is easy.
+    - Searching for students with a specific age can be done with a
+      binary search.
+    - Hash table will not work because it takes O(m) time to find max
+      and min.
+
+createSet: O(n)
+    - O(n) to malloc all elements of the array of student pointers
+    - O(1) for everything else
+
+destroySet:O(n) 
+    - O(n) to deallocate all elements in the array of student pointers
+    - O(1) for everything else
+
+searchAge: O(n)
+    - Binary search is used to find an index where a student with the
+      specified age is at so it doesn't take as long to traverse to the
+      indicies where all the students with the same age reside. Thus, 
+      even though the big O runtime for this method is same to if the
+      array is sequentially traversed, in the average sinario, it will
+      run slightly faster than sequentially searching to the age.
+    - O(log(n)) to find an index where a student with specified age is
+    - O(a) to find all students with specified age, where a is the
+      number of students with the specified age.
+    - O(n - a) to shift all students higher than the specified age down
+    - TOTAL Complexity is = log(n) + a + n - a = log(n) + n
+    
+insert: O(n)
+    - O(log(n)) to search for the index the student is to be placed
+    - O(n) to shift all values of the array down one index
+
+removeStu: O(n)
+    - O(a) to remove all students with specified age, where a is the
+      number of students with the specified age.
+    - O(n - a) to shift all students higher than the specified age down
+    - Total Complexity: O(a) + O(n - a) = O(n)
+
+maxAgeGap: O(1)
+    - O(1) to access the min number
+    - O(1) to access the max number
+    - O(1) to calculate the gap
+    - Total Complexity: O(1)

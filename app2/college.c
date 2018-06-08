@@ -4,7 +4,7 @@
 # include <time.h>
 # include "dataset.h"
 
-# define MAX_STUDENTS 3000
+# define MAX_STUDENTS 3001
 
 int ran(int min, int max){
     return ((rand() % (max - min + 1)) + min);

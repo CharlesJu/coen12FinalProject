@@ -57,6 +57,7 @@ static int compareAge(STU *a, STU *b){
 
 /**
  * @brief:  Creates a new set containing students
+ *          Complexity: O(n)
  * @return: the pointer to the new set
  */ 
 SET *createSet(int m){
@@ -150,7 +151,7 @@ void insert(SET *sp, int id, int age){
     bool x;
     //Determine index of where the new student should be placed
     int i = bSearch(sp, age, &x);
-    printf("[%d] | #%d, age: %d\n", i, id, age);
+    printf("Adding Student #%d, age: %d\n", id, age);
 
     //Shift all values above to make room in the array
     for(int j = sp->count; j > i; j--){
@@ -179,12 +180,16 @@ void maxAgeGap(SET *sp){
 void searchAge(SET *sp, int a){
     assert(sp != NULL);
     printf("Searing for students age %d\n", a);
-    
+    bool found = false;
     //Looks at value in the array until age a and print their id if the age is a
     for(int i = 0; (i < sp->count) && (sp->data[i]->age <= a); i++){
         if(sp->data[i]->age == a){
             printf("Found Student %d\n", sp->data[i]->id);
+            found = true;
         }
+    }
+    if(!found){
+        printf("No students with age %d is found\n", a);
     }
 }
 
@@ -207,7 +212,7 @@ void removeStu(SET *sp, int age){
             if(sp->data[j]->age != age){
                 go = false;
             } else {
-                printf("Removed student %d | age: %d\n", sp->data[j]->id, sp->data[j]->age);
+                printf("Removed student %d\t|age: %d\n", sp->data[j]->id, sp->data[j]->age);
                 free(sp->data[j]);
                 max++;
             }
@@ -215,12 +220,12 @@ void removeStu(SET *sp, int age){
 
         //Removing all students to the left of i with matching age
         go = true;
-        for(int j = i-1; j > 0 && go ; j--){
+        for(int j = i-1; j > -1 && go ; j--){
             if(sp->data[j]->age != age){
                 go = false;
             } else {
                 free(sp->data[j]);
-                printf("Removed student %d | age: %d\n", sp->data[j]->id, sp->data[j]->age);
+                printf("Removed student %d\t| age: %d\n", sp->data[j]->id, sp->data[j]->age);
                 min--;
             }
         }
@@ -233,5 +238,19 @@ void removeStu(SET *sp, int age){
             min++;
         }
         sp->count -= gap;
+    } else {
+        printf("No students with age %d is found\n", age);
     }
+}
+
+/** 
+ * @brief:  prints the index, id, and age of every student in the student data array 
+ *          in the SET pointed to by sp 
+ *          Complexity: O(n) 
+ */  
+void printAll(SET *sp){ 
+    assert(sp != NULL); 
+    for(int i = 0; i < sp->count; i++){ 
+        printf("[%d]\t#%d:\t%d \n", i, sp->data[i]->id, sp->data[i]->age); 
+    } 
 }
