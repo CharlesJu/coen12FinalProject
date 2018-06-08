@@ -244,6 +244,7 @@ void removeStu(SET *sp, int age){
 }
 
 /** 
+ * FOR DEBUGGING PURPOSES
  * @brief:  prints the index, id, and age of every student in the student data array 
  *          in the SET pointed to by sp 
  *          Complexity: O(n) 
