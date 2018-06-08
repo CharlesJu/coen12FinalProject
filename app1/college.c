@@ -20,11 +20,11 @@ int main(void){
         id += ran(1,2);
         // maxAgeGap(sp);
     }
-
     printAll(sp);
     searchAge(sp, ran(18,30));
-    removeStu(sp, ran(18,30));
-    searchAge(sp, ran(18,30));
+    int r = ran(18, 30);
+    removeStu(sp, r);
+    searchAge(sp, r);
     printAll(sp);
     maxAgeGap(sp);
     destroySet(sp);
